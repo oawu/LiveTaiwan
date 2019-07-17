@@ -1,0 +1,78 @@
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2015 - 2019, Ginkgo
+ * @license     http://opensource.org/licenses/MIT  MIT License
+ * @link        https://www.ioa.tw/
+ */
+
+const rq = require;
+const Ginkgo = rq('./libs/node/Ginkgo');
+const cc = Ginkgo.cc;
+const ln = Ginkgo.ln;
+const pp = Ginkgo.pp;
+
+const Path = require('path');
+const root = '..' + Path.sep;
+
+const _v = {
+  font: {
+    isListen: false,
+    isReady: false,
+    timer: 1000,
+  },
+  scss: {
+    isListen: false,
+    isReady: false,
+    timer: 2500,
+  },
+  live: {
+    isListen: false,
+    isReady: false,
+    divs: []
+  },
+  divs: {
+    _:    Path.resolve(__dirname, root + '')     + Path.sep,
+    cmd:  Path.resolve(__dirname, root + 'cmd')  + Path.sep,
+    css:  Path.resolve(__dirname, root + 'css')  + Path.sep,
+    font: Path.resolve(__dirname, root + 'font') + Path.sep,
+    js:   Path.resolve(__dirname, root + 'js')   + Path.sep,
+    scss: Path.resolve(__dirname, root + 'scss') + Path.sep,
+    img:  Path.resolve(__dirname, root + 'img')  + Path.sep,
+  }
+};
+
+_v.live.divs = [
+  _v.divs.css,
+  _v.divs.js,
+  _v.divs.img,
+  _v.divs._ + '**' + Path.sep + '*.html'
+];
+
+Ginkgo.init('Ginkgo 開發工具', function() {
+
+  pp(cc('    ➤ ', 'C') + Ginkgo.ctrlC() + ln + cc(' 【監控目錄】', 'y') + ln);
+
+  rq('./libs/node/watch/icon').run(_v, function() {
+    rq('./libs/node/watch/scss').run(_v, function() {
+      rq('./libs/node/watch/livereload').run(_v, function() {
+        pp(ln + cc(' 【開發工具狀態】', 'y') + ln);
+
+        if (!(_v.font.isListen || _v.scss.isListen || _v.live.isListen))
+          return pp(cc('    ➤ ', 'C') + '開發工具沒有開啟..' + ln);
+
+        pp(cc('    ➤ ', 'C') + 'Watch Icon Fonts' + cc(' ─ ', 'w0') + (_v.font.isListen ? cc('已經啟動', 'g') : cc('尚未啟動', 'r')) + ln);
+        pp(cc('    ➤ ', 'C') + 'Watch Scss Files' + cc(' ─ ', 'w0') + (_v.scss.isListen ? cc('已經啟動', 'g') : cc('尚未啟動', 'r')) + ln);
+        pp(cc('    ➤ ', 'C') + 'Watch Livereload' + cc(' ─ ', 'w0') + (_v.live.isListen ? cc('已經啟動', 'g') : cc('尚未啟動', 'r')) + ln);
+        
+        pp(ln + cc(' 【完成】', 'y') + ln);
+        pp(cc('    ➤ ', 'C') + '您可以開始開發囉！' + ln);
+        pp(cc('    ➤ ', 'C') + Ginkgo.ctrlC());
+        
+        pp(ln + cc(' 【開發紀錄】', 'R') + ln);
+
+        return;
+      });
+    });
+  });
+  
+});

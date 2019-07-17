@@ -1,0 +1,6 @@
+@charset "UTF-8";
+*, *:after, *:before { vertical-align: top; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; -moz-osx-font-smoothing: subpixel-antialiased; -webkit-font-smoothing: subpixel-antialiased; -moz-font-smoothing: subpixel-antialiased; -ms-font-smoothing: subpixel-antialiased; -o-font-smoothing: subpixel-antialiased; }
+
+html body { position: relative; display: inline-block; width: 100%; margin: 0; padding: 0; color: #5a5a5a; text-align: center; font-size: medium; font-family: "微軟正黑體", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif; }
+html body::-moz-selection { color: white; background-color: #78baff; }
+html body::selection { color: white; background-color: #78baff; }

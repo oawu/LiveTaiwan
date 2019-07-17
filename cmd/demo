@@ -1,0 +1,109 @@
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2015 - 2019, Ginkgo
+ * @license     http://opensource.org/licenses/MIT  MIT License
+ * @link        https://www.ioa.tw/
+ */
+
+const rq = require;
+const Ginkgo = rq('./libs/node/Ginkgo');
+const cc = Ginkgo.cc;
+const ln = Ginkgo.ln;
+const pp = Ginkgo.pp;
+
+
+const _v = {
+  cho: {
+    goal: null,
+    minify: null,
+  },
+  s3Info: rq('fs').existsSync('./libs/node/demo/config.js') ? rq('./libs/node/demo/config').s3Info() : {
+    bucket: null,
+    access: null,
+    secret: null,
+    folder: null,
+    domain: null,
+  },
+  gitOri: {
+    url: [],
+    branch: null,
+  },
+  dirs: [],
+  plugins: [
+    // {title: '轉換1', cmd: 'php', file: 'cover.php', argv: ''},
+  ]
+};
+
+Ginkgo.init('Ginkgo 上傳工具', function() {
+
+  function finish() {
+    rq('./libs/node/demo/finish').run(_v, function() {
+      pp(cc('    ➤ ', 'C') + '趕緊去看最新版的吧！' + ln);
+
+      if (_v.cho.goal == 'gh-pages' && _v.gitOri.url.length == 2)
+        pp(cc('    ➤ ', 'C') + '因為快取問題，請稍待 ' + cc('1 分鐘', 'w2') + ' 後再重新整理頁面。' + ln +
+           cc('    ➤ ', 'C') + '網址：' + cc('https://' + _v.gitOri.url[0] + '.github.io/' + _v.gitOri.url[1] + '/', 'b2', undefined, 'underline') + ln);
+      if (_v.cho.goal == 'aws-s3')
+        pp(cc('    ➤ ', 'C') + '若有設定 CDN 快取的話，請等 Timeout 後再重新整理頁面。' + ln +
+           cc('    ➤ ', 'C') + '網址：' + cc('https://' + _v.s3Info.domain.replace(new RegExp('^\/*|\/*$', 'g'), '') + '/' + (_v.s3Info.folder.length ? _v.s3Info.folder + '/' : ''), 'b2', undefined, 'underline') + ln);
+
+      pp(ln + ln);
+    });
+  }
+
+  function minifyFiles() {
+    rq('./libs/node/demo/minify').run(_v, upload);
+  }
+
+  function pushNewBr() {
+    rq('./libs/node/demo/pushBr').run(_v, function(goal) {
+        return pp(ln + cc(' 【上傳完成】', 'R') + ln) && finish();
+    });
+  }
+
+  function upload() {
+    const tmp = function() {
+      return pp(ln + cc(' 【記錄與更新】', 'y') + ln) && pushNewBr();
+    };
+
+    return _v.cho.goal == 'aws-s3' ?
+      rq('./libs/node/demo/putS3').run(_v, tmp) :
+      tmp();
+  }
+
+  function plugin() {
+    rq('./libs/node/demo/plugin').run(_v, function() {
+      return _v.cho.minify ?
+        pp(ln + cc(' 【壓縮檔案】', 'y') + ln) && minifyFiles() :
+        upload();
+    });
+  }
+
+  function newBranch() {
+    return rq('./libs/node/demo/newBr').run(_v, function(cho) {
+      return pp(ln + cc(' 【執行外掛】', 'y') + ln) && plugin();
+    });
+  }
+
+  function checkEnv() {
+    rq('./libs/node/demo/check').run(_v, function(cho) {
+      return pp(ln + cc(' 【設定分支】', 'y') + ln) && newBranch();
+    });
+  }
+
+  function s3Info() {
+    rq('./libs/node/demo/s3Info').run(_v, function(cho) {
+      return pp(ln + cc(' 【檢查環境】', 'y') + ln) && checkEnv();
+    });
+  }
+
+  pp(cc('    ➤ ', 'C') + '注意喔，過程中請勿隨意結束！' + ln + cc('    ➤ ', 'C') + Ginkgo.ctrlC());
+
+  rq('./libs/node/demo/argvs').run(process.argv, _v);
+
+  rq('./libs/node/demo/choice').run(_v, function(cho) {
+    return cho.goal == 'gh-pages' ?
+      pp(ln + cc(' 【檢查環境】', 'y') + ln) && checkEnv() :
+      pp(ln + cc(' 【S3 設定】', 'y') + ln) && s3Info();
+  });
+});

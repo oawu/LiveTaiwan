@@ -1,0 +1,59 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@function str-last-index($string, $substr) {
+  $index: null;
+  $length: str-length($string);
+  
+  @for $n from $length through 1 {
+    $index: str-index(str-slice($string, $n, $length), $substr);
+    
+    @if $index {
+      @return $index + $n - 1;
+    }
+  }
+
+  @return $index;
+}
+
+@function font-files($files...) {
+  $srcs: null;
+
+  $formats: (
+    eot: 'embedded-opentype',
+    woff: 'woff',
+    ttf: 'truetype',
+    svg: 'svg',
+    woff2: 'woff2',
+    otf: 'opentype',
+    opentype: 'opentype',
+    truetype: 'truetype',
+  );
+
+  @if(length($files) >= 1) {
+    $srcs: append($srcs, url(quote(nth($files, 1) + '?' + unique-id())));
+  }
+
+  @each $file in $files {
+    $ext: str-slice($file, str-last-index($file, '.') + 1);
+    $format: if(map-has-key($formats, $ext), map-get($formats, $ext), '');
+    @if ($ext == 'eot') {
+      $srcs: append($srcs, url(quote($file + '?' + unique-id() + '#iefix')) if($format == '', null, format(quote($format))));
+    } @else {
+      $srcs: append($srcs, url(quote($file + '?' + unique-id())) if($format == '', null, format(quote($format))));
+    }
+  }
+
+  @return $srcs;
+}
+
+@mixin font-face($name, $srcs) {
+  @font-face {
+    font-family: quote($name);
+    src: $srcs;
+  }
+}

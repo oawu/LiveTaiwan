@@ -1,0 +1,620 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+$_CircleAnimation: false !global;
+@mixin CircleAnimation() {
+  @if ($_CircleAnimation == false) {
+    $_CircleAnimation: true !global;
+    @include keyframes(_CircleAnimation) { 0% { @include rotate(0); } 100% { @include rotate(360deg); } }
+  }
+}
+
+//
+// @name                     Ginkgo's Button UI
+//
+// @param $color             按鈕顏色
+// @param $height            按鈕高度
+//
+// @example:
+//   <button></button>
+//
+@mixin button($color: rgba(69, 139, 244, 1.00), $height: 24px) {
+  display: inline-block;
+  width: auto;
+  height: $height;
+  line-height: $height;
+  font-size: $height / 2;
+
+  padding-top: 0;
+  padding-bottom: 0;
+  
+  border: 0;
+  cursor: pointer;
+
+  @include contrasted($color, rgba(55, 55, 55, 1.00), rgba(255, 255, 255, 1.00));
+  @include box-shadow(inset 1px 1px 1px rgba(255, 255, 255, 0.15), inset -1px -1px 1px rgba(0, 0, 0, 0.15));
+  @include border-radius(2px);
+  @include transition(box-shadow .1s);
+  
+  &:hover {
+    @include box-shadow(inset -1px -1px 2px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.25));
+    @include text-shadow(0 0 1px rgba(0, 0, 0, 0.25));
+  }
+
+  &:active {
+    @include box-shadow(inset 1px 1px 1px rgba(0, 0, 0, 0.1));
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  $amount: 15%;
+  &[disabled] {
+    cursor: not-allowed;
+    @include text-shadow(none);
+    @include box-shadow(none);
+    @include contrasted(adjust-lightness($color, $amount), adjust-lightness(rgba(55, 55, 55, 1.00), $amount), adjust-lightness(rgba(255, 255, 255, 1.00), $amount));
+  }
+}
+
+//
+// @name                     Ginkgo's Checkbox UI
+//
+// @param $bgColor           底色
+// @param $size              寬高
+// @param $loadingSize       Loading 寬高
+//
+// @example:
+//   <label>
+//     <input type="checkbox">
+//     <span></span>
+//   </label>
+//
+@mixin checkbox($bgColor: rgba(69, 139, 244, 1.00), $size: 20px, $loadingSize: 4px) {
+  position: relative;
+  
+  display: inline-block;
+  height: $size;
+  line-height: $size;
+
+  cursor: pointer;
+  font-size: $size - 6px;
+  padding-left: $size + 4px;
+
+  > * {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+  }
+
+  input {
+    cursor: pointer;
+    z-index: 2;
+    @include opacity(0);
+
+    &[disabled] {
+      cursor: not-allowed;
+    }
+
+    &:not([disabled]):checked ~ span {
+      &:before {
+        @include box-shadow(inset 1px 1px 1px rgba(0, 0, 0, .1), inset 0 0 1px rgba(0, 0, 0, .1));
+      }
+      &:after {
+        color: rgba(255, 255, 255, 1.00);
+        @include text-shadow(.5px .5px 2px rgba(0, 0, 0, .3));
+        @include box-shadow(none);
+      }
+    }
+  }
+
+  span {
+    width: $size;
+    height: $size;
+    background-color: rgba(255, 255, 255, 1.00);
+    z-index: 1;
+
+    &:before, &:after {
+      content: '';
+
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+
+      z-index: 1;
+
+      @include border-radius(2px);
+      @include transition(border-radius .3s);
+    }
+
+    &:before {
+      @include box-shadow(inset 0 0 1px rgba(0, 0, 0, .1));
+    }
+
+    &:after {
+      content: "✔";
+      @content;
+
+      left: 2px;
+      top: 2px;
+
+      width: calc(100% - #{2px * 2});
+      height: calc(100% - #{2px * 2});
+      line-height: $size - 2px * 2;
+      color: rgba(255, 255, 255, 1.00);
+      text-align: center;
+
+      background-image: none;
+      background-color: rgba(255, 255, 255, 1.00);
+      z-index: 2;
+
+      @include box-shadow(.5 .5 1px rgba(0, 0, 0, .1));
+      @include transition(background-color .3s, color .3s);
+    }
+  }
+
+  input:not([disabled]):checked ~ span:after {
+    background-color: $bgColor;
+  }
+
+  span:before {
+    background-color: $bgColor;
+  }
+
+  &.loading {
+    span {
+      &:before {
+        @include border-radius(50%);
+        @include background-image(linear-gradient(rgba(184, 241, 148, 1.00) 0%, rgba(89, 178, 169, 1.00) 100%));
+        @include animation(_CircleAnimation 1s linear infinite);
+      }
+      &:after {
+        content: "";
+        left: $loadingSize;
+        top: $loadingSize;
+        width: calc(100% - #{$loadingSize} * 2);
+        height: calc(100% - #{$loadingSize} * 2);
+        @include border-radius(50%);
+      }
+    }
+
+    input:checked ~ span:after {
+      background-color: white;
+    }
+  }
+  @include CircleAnimation;
+}
+
+//
+// @name                     Ginkgo's Hyperlink UI
+//
+// @param $underLineHeight   底線高度
+// @param $d4UnderLine       預設出現底線
+// @param $color             顏色
+// @param $hoverColor        hover 時的顏色
+//
+// @example:
+//   <a></a>
+//
+@mixin a($underLineHeight: 0, $d4UnderLine: false, $color: rgba(66, 133, 244, 1.00), $hoverColor: null) {
+  color: $color;
+  display: inline;
+  font-weight: normal;
+  text-decoration: none;
+  @include transition(color .3s, border-bottom .3s);
+
+  @if $hoverColor == null {
+    $hoverColor: adjust-lightness($color, -15%);
+  }
+
+  @if $underLineHeight > 0 {
+    @if($d4UnderLine) {
+      border-bottom: $underLineHeight solid adjust-lightness($color, 5%);
+    }
+    @else {
+      border-bottom: $underLineHeight solid transparent;
+    }
+  }
+  &.active, &:hover {
+    color: $hoverColor;
+
+    @if($underLineHeight > 0) {
+      border-bottom: $underLineHeight solid adjust-lightness($hoverColor, 5%);
+    }
+  }
+}
+
+//
+// @name                     Ginkgo's Input UI
+//
+// @param $borderFocusColor  文字顏色
+//
+// @example:
+//   <input />
+//
+@mixin input($borderFocusColor: rgba(100, 175, 235, 1), $height: 30px) {
+  height: $height;
+  line-height: $height - 2px - 1px;
+
+  color: rgba(120, 120, 120, 1.00);
+  font-size: $height * 0.5;
+  padding: 0 8px;
+  border: 1px solid rgba(200, 200, 200, 1.00);
+
+  @include border-radius (2px);
+  @include transition(box-shadow .3s, border-color .3s);
+
+  @include input-placeholder {
+    font-weight: normal;
+    color: rgba(175, 175, 175, 1);
+    font-size: $height * 0.475;
+  }
+
+  &:focus {
+    outline: 0;
+    border: 1px solid $borderFocusColor;
+    @include box-shadow(0 0 8px rgba(red($borderFocusColor), green($borderFocusColor), blue($borderFocusColor), .6));
+  }
+
+  &[readonly] {
+    cursor: not-allowed;
+    background-color: rgba(250, 250, 250, 1);
+    border: 1px solid rgba(225, 225, 225, 1.00);
+
+    @include input-placeholder {
+      color: rgba(200, 200, 200, 1);
+    }
+
+    &:focus {
+      border: 1px solid rgba(225, 225, 225, 1.00);
+      @include box-shadow(none);
+    }
+  }
+
+  &[type="file"] {
+    $tmp: $height / 10 + 1;
+    font-size: $height / 3;
+    padding: $tmp;
+    line-height: 0;
+    width: auto;
+
+    &::-webkit-file-upload-button {
+      @include button(rgba(69, 139, 244, 1.00), $height - ($tmp + 1px) * 2);
+    }
+  }
+  
+  &[type='number']::-webkit-inner-spin-button {
+  }
+
+  &[type='date']::-webkit-datetime-edit {
+    font-size: $height * 0.5;
+  }
+
+  @content;
+}
+
+//
+// @name                     Ginkgo's Radio UI
+//
+// @param $bgColor           底色
+// @param $size              寬高
+// @param $dotSpaceSize      內點空隙大小
+// @param $loadingSize       Loading 寬高
+//
+// @example:
+//   <label>
+//     <input type="radio">
+//     <span></span>
+//   </label>
+//
+@mixin radio($bgColor: rgba(69, 139, 244, 1.00), $size: 20px, $dotSpaceSize: 6px, $loadingSize: 4px) {
+  position: relative;
+  display: inline-block;
+
+  min-width: $size;
+  height: $size;
+  line-height: $size;
+
+  cursor: pointer;
+  font-size: $size - 6px;
+  padding-left: $size + 4px;
+
+  > * {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    display: inline-block;
+    z-index: 1;
+  }
+
+  input {
+    @include opacity(0);
+  }
+
+  span {
+    width: $size;
+    height: $size;
+    z-index: 2;
+
+    @include border-radius(50%);
+    @include transition(background-color .3s);
+    @include box-shadow(inset 0 0 0 .5px rgba(100, 100, 100, .500));
+    
+    &:before, &:after {
+      position: absolute;
+      display: inline-block;
+    }
+
+    &:after {
+      content: '';
+      
+      left: $dotSpaceSize;
+      top: $dotSpaceSize;
+
+      width: calc(100% - #{$dotSpaceSize * 2});
+      height: calc(100% - #{$dotSpaceSize * 2});
+      background-color: white;
+      
+      @include scale(0);
+      @include border-radius(50%);
+      @include transition(transform .3s);
+    }
+  }
+
+  input:checked ~ span {
+    background-color: $bgColor;
+    @include box-shadow(inset 1px 1px 1px rgba(0, 0, 0, .200));
+    
+    &:after {
+      @include box-shadow(1px 1px 1px rgba(0, 0, 0, .200));
+      @include scale(1);
+    }
+  }
+
+  &.loading {
+    cursor: not-allowed;
+    
+    span {
+      &:before {
+        content: '';
+        left: 0;
+        top: 0;
+        z-index: 1;
+
+        width: 100%;
+        height: 100%;
+
+        @include box-shadow(inset 0 0 1px rgba(0, 0, 0, .15));
+        @include border-radius(50%);
+        @include background-image(linear-gradient(rgba(184, 241, 148, 1.00) 0%, rgba(89, 178, 169, 1.00) 100%));
+        @include animation(_CircleAnimation 1s linear infinite);
+      }
+
+      &:after {
+        left: $loadingSize;
+        top: $loadingSize;
+        z-index: 2;
+
+        width: calc(100% - #{$loadingSize * 2});
+        height: calc(100% - #{$loadingSize * 2});
+
+        background-color: rgba(255, 255, 255, 1.00);
+        
+        @include scale(1);
+        @include border-radius(50%);
+        @include box-shadow(0 0 1px rgba(0, 0, 0, .1));
+      }
+    }
+  }
+
+  input[disabled] {
+    cursor: not-allowed;
+    
+    ~ span {
+      cursor: not-allowed;
+      @include box-shadow(inset 0 0 0 .5px rgba(100, 100, 100, .300));
+    }
+  }
+ 
+  @include CircleAnimation;
+}
+
+//
+// @name                     Ginkgo's Switch UI
+//
+// @param $bgColor           底色
+// @param $height            高度
+// @param $width             寬高
+// @param $loadingSize       Loading 寬高
+//
+// @example:
+//   <label>
+//     <input type="checkbox">
+//     <span></span>
+//   </label>
+//
+@mixin switch($bgColor: rgba(69, 139, 244, 1.00), $height: 20px, $width: 40px, $loadingSize: 4px) {
+  position: relative;
+  display: inline-block;
+
+  height: $height;
+  line-height: $height;
+  
+  cursor: pointer;
+  font-size: $height - 6px;
+  padding-left: $height + 4px;
+
+  input {
+    position: absolute;
+    @include opacity(0);
+  }
+
+  span {
+    position: relative;
+    display: inline-block;
+    width: $width;
+    height: $height;
+
+    overflow: hidden;
+    @include border-radius($height / 2);
+
+    &:before, &:after {
+      content: '';
+      position: absolute;
+      display: inline-block;
+    }
+      
+    &:before {
+      left: 0;
+      top: 0;
+
+      width: 100%;
+      height: 100%;
+      
+      border: 1px solid rgba(223, 223, 223, 1.00);
+      background-color: white;
+      
+      @include border-radius($height / 2);
+      @include box-shadow(inset 0px 0px 0px 0px rgba(223, 223, 223, 1));
+      @include transition(box-shadow 0.4s, background-color .2s);
+    }
+    &:after {
+      left: 1px;
+      top: 1px;
+      
+      width: $height - 1px * 2;
+      height: $height - 1px * 2;
+      
+      background-color: rgba(255, 255, 255, 1.00);  
+      @include border-radius(50%);
+      @include transition(background-color 0.4s, left 0.2s);
+      @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
+    }
+  }
+
+  &:not(.loading) input:checked ~ span {
+    &:before {
+      background-color: $bgColor;
+      border-color: adjust-lightness($bgColor, -5%);
+      @include box-shadow(inset 0px 0px 0px 11px $bgColor);
+    }
+    &:after {
+      left: $width + 1px - $height;
+    }
+  }
+
+  &.loading {
+    cursor: not-allowed;
+
+    span {
+      width: $height;
+      height: $height;
+
+      &:before {
+        z-index: 1;
+        border-width: 0;
+
+        @include box-shadow(inset 0 0 1px rgba(0, 0, 0, .15));
+        @include border-radius(50%);
+        @include background-image(linear-gradient(rgba(184, 241, 148, 1.00) 0%, rgba(89, 178, 169, 1.00) 100%));
+        @include animation(_CircleAnimation 1s linear infinite);
+      }
+
+      &:after {
+        z-index: 2;
+        
+        left: $loadingSize;
+        top: $loadingSize;
+
+        width: calc(100% - #{$loadingSize * 2});
+        height: calc(100% - #{$loadingSize * 2});
+
+        background-color: rgba(255, 255, 255, 1.00);
+        @include border-radius(50%);
+        @include box-shadow(0 0 1px rgba(0, 0, 0, .1));
+      }
+    }
+  }
+
+  input[disabled] {
+    cursor: not-allowed;
+
+    ~ span {
+      cursor: not-allowed;
+
+      &:before {
+        border: 1px solid rgba(215, 215, 215, 1.00);
+        background-color: rgba(235, 235, 235, 1.00);
+      }
+      &:after {
+        @include box-shadow(0 0 0 1px rgba(215, 215, 215, 1));
+        background-color: rgba(245, 245, 245, 1.00);
+      }
+    }
+  }
+
+  @include CircleAnimation;
+}
+
+//
+// @name                     Ginkgo's Textarea UI
+//
+// @param $resize            是否可以移動大小
+// @param $borderColor       框色
+//
+// @example:
+//   <textarea></textarea>
+//
+@mixin textarea($resize: false, $borderColor: rgba(100, 175, 235, 1)) {
+  padding: 4px;
+  font-size: 16px;
+  color: rgba(120, 120, 120, 1.00);
+  border: 1px solid rgba(200, 200, 200, 1.00);
+  @include border-radius (2px);
+  @include transition(box-shadow .3s, border-color .3s);
+  
+  @if $resize == false {
+    resize: none;
+  }
+
+  @include input-placeholder {
+    font-weight: normal;
+    color: rgba(175, 175, 175, 1);
+    font-size: 14px;
+  }
+
+  &:focus {
+    outline: 0;
+    border: 1px solid $borderColor;
+    @include box-shadow(0 0 8px rgba(red($borderColor), green($borderColor), blue($borderColor), .6));
+  }
+  
+  &[readonly] {
+    cursor: not-allowed;
+    background-color: rgba(250, 250, 250, 1);
+    border: 1px solid rgba(225, 225, 225, 1.00);
+
+    @include input-placeholder {
+      color: rgba(200, 200, 200, 1);
+    }
+
+    &:focus {
+      border: 1px solid rgba(225, 225, 225, 1.00);
+      @include box-shadow(none);
+    }
+  }
+
+  @content;
+}
+

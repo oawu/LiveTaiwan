@@ -1,0 +1,102 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "compass/css3/box-sizing";
+@import "compass/css3/selection";
+@import "compass/css3/box-shadow";
+@import "compass/css3/text-shadow";
+@import "compass/css3/border-radius";
+@import "compass/css3/animation";
+@import "compass/css3/transform";
+@import "compass/css3/opacity";
+@import "compass/css3/images";
+@import "compass/css3/user-interface";
+@import "compass/css3/transition";
+@import "compass/css3/background-size";
+@import "compass/css3/filter";
+@import "compass/css3/background-clip";
+@import "compass/css3/appearance";
+@import "compass/utilities/color/contrast";
+@import "compass/css3/user-interface";
+
+@mixin range-width($min: 0, $max: 0) {
+  @if $max == 0 {
+    @media screen and (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @media screen and (max-width: $max - 1px) and (min-width: $min) {
+      @content;
+    }
+  }
+}
+
+@mixin range-height($min: 0, $max: 0) {
+  @if $max == 0 {
+    @media screen and (min-height: $min) {
+      @content;
+    }
+  } @else {
+    @media screen and (max-height: $max - 1px) and (min-height: $min) {
+      @content;
+    }
+  }
+}
+
+@mixin font-smoothing($val: antialiased) {
+  -moz-osx-font-smoothing: $val;
+   -webkit-font-smoothing: $val;
+      -moz-font-smoothing: $val;
+       -ms-font-smoothing: $val;
+        -o-font-smoothing: $val;
+}
+
+@mixin overflow-docx3() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin clearfix() {
+  *zoom: 1;
+
+  &:after {
+    display: table;
+    content: "";
+    line-height: 0;
+    clear: both;
+  }
+}
+
+@mixin cursor-zoomIn {
+  cursor: url("data:image/vnd.microsoft.icon;base64,AAACAAEAICACAAcABwAwAQAAFgAAACgAAAAgAAAAQAAAAAEAAQAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHAAAACIAAABCAAAAhAAAAwgAAPwQAAOHIAAGMaAABEiAAAzMwAAJAkAACQJAAAzMwAAESIAABjGAAAOHAAAA/AAAAAAAAAAAAAA////////////////////////////////////////////////////////////////////////j////wf///4H///8D//8AB//8AA//+AAf//BIH//xhj//4QIf/+IBH//iAR//4QIf//GGP//wSD//+AB///wA////A////////8="), all-scroll;
+  cursor: -webkit-zoom-in;
+  cursor: -moz-zoom-in;
+  cursor: -o-zoom-in;
+  cursor: -ms-zoom-in;
+  cursor: zoom-in;
+}
+
+@mixin cursor-grab {
+  // http://www.google.com/intl/en_ALL/mapfiles/openhand.cur
+  cursor: url('data:image/vnd.microsoft.icon;base64,AAACAAEAICACAAcABQAwAQAAFgAAACgAAAAgAAAAQAAAAAEAAQAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAA/AAAAfwAAAP+AAAH/gAAB/8AAA//AAAd/wAAGf+AAAH9gAADbYAAA2yAAAZsAAAGbAAAAGAAAAAAAAA//////////////////////////////////////////////////////////////////////////////////////gH///4B///8Af//+AD///AA///wAH//4AB//8AAf//AAD//5AA///gAP//4AD//8AF///AB///5A////5///8='), all-scroll;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: -o-grab;
+  cursor: -ms-grab;
+  cursor: grab;
+}
+
+@mixin cursor-grabbing {
+  // http://www.google.com/intl/en_ALL/mapfiles/closedhand.cur
+  cursor: url('data:image/vnd.microsoft.icon;base64,AAACAAEAICACAAcABQAwAQAAFgAAACgAAAAgAAAAQAAAAAEAAQAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAAAA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AAAA/AAAAfwAAAP+AAAH/gAAB/8AAAH/AAAB/wAAA/0AAANsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////////////////////////////////////////////////////////////////////////////////////gH///4B///8Af//+AD///AA///wAH//+AB///wAf//4AH//+AD///yT/////////////////////////////8='), all-scroll;
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  cursor: -o-grabbing;
+  cursor: -ms-grabbing;
+  cursor: grabbing;
+}

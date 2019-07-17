@@ -1,0 +1,31 @@
+#                                #
+# - path: ""                     # 路徑，專案目錄開始的相對目錄
+#   formats: [".html", ".text"]  # 接受的副檔名，[] 為全部的副檔名都接受
+#   hidden: No                   # 是否包含隱藏檔，Yes 與 No 兩種選項
+#   recursive: No                # 是否包含子資料夾，Yes 與 No 兩種選項
+#                                #
+
+- path: ''
+  formats: ['.html', '.txt']
+  hidden: No
+  recursive: No
+
+- path: "js"
+  formats: [".js"]
+  hidden: No
+  recursive: Yes
+
+- path: "css"
+  formats: [".css"]
+  hidden: No
+  recursive: Yes
+
+- path: "font"
+  formats: [".eot", ".svg", ".ttf", ".woff"]
+  hidden: No
+  recursive: Yes
+
+- path: "img"
+  formats: [".png", ".jpg", ".jpeg", ".gif", ".svg"]
+  hidden: No
+  recursive: Yes

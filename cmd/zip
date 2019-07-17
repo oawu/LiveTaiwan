@@ -1,0 +1,36 @@
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2015 - 2019, Ginkgo
+ * @license     http://opensource.org/licenses/MIT  MIT License
+ * @link        https://www.ioa.tw/
+ */
+
+const rq = require;
+const Ginkgo = rq('./libs/node/Ginkgo');
+
+const cc = Ginkgo.cc;
+const ln = Ginkgo.ln;
+const pp = Ginkgo.pp;
+const Path = rq('path');
+const root = '..' + Path.sep;
+const path = Path.resolve(__dirname, root + Path.resolve(__dirname, root).split(Path.sep).pop() + '.zip');
+
+Ginkgo.init('Ginkgo 打包工具', function() {
+  pp(cc('    ➤ ', 'C') + '注意喔，過程中請勿隨意結束！' + ln + cc('    ➤ ', 'C') + Ginkgo.ctrlC());
+
+  pp(ln + cc(' 【讀取設定檔案】', 'y') + ln);
+  rq('./libs/node/zip/dirsInfo').run(function(dirs) {
+
+    pp(ln + cc(' 【壓縮檔案】', 'y') + ln);
+    rq('./libs/node/zip/listFiles').run(dirs, function(dirs) {
+
+      rq('./libs/node/zip/compress').run(path, dirs, function(path) {
+        
+        pp(ln + cc(' 【壓縮完成】', 'r2') + ln);
+        pp(cc('    ➤ ', 'C') + '已經成功壓縮專案！' + ln);
+        pp(cc('    ➤ ', 'C') + '依據 ' + cc('cmd/_dirs.yaml', 'w2') + ' 所指定的目錄檔案做壓縮！' + ln);
+        pp(cc('    ➤ ', 'C') + '壓縮檔位置：' + cc(path, 'b2', undefined, 'underline') + ln + ln);
+      });
+    });
+  });
+});

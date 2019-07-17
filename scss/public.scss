@@ -1,0 +1,30 @@
+//
+// @author      OA Wu <comdan66@gmail.com>
+// @copyright   Copyright (c) 2015 - 2019, Ginkgo
+// @license     http://opensource.org/licenses/MIT  MIT License
+// @link        https://www.ioa.tw/
+//
+
+@import "Ginkgo";
+
+html {
+  position: relative;
+
+  body {
+    position: relative;
+
+    display: inline-block;
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    color: rgba(90, 90, 90, 1.00);
+    text-align: center;
+    font-size: medium;
+    font-family: "微軟正黑體", "Open sans", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
+    
+    // 文字染色，背景色、文字色
+    @include selection(rgba(120, 186, 255, 1.00), rgba(255, 255, 255, 1));
+  }
+}
