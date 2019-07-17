@@ -1,38 +1,15 @@
-# 歡迎來到 Ginkgo
-金黃色的秋意
+# 歡迎來到 LiveTaiwan
+讓我們大家一起來搜集全台灣即時影像，組成一個全台灣的各個景點的直播地圖吧！
 
 ---
 
-## 初步安裝
-使用之前需要安裝 [Node.js](https://nodejs.org/) 與 [Compass](http://compass-style.org/)，以下依據作業系統介紹做初步安裝：
+## 內容說明
+* 這是一個將全台灣各地的 [Youtube](https://www.youtube.com/) 直播集合起來的網站，並且採用 [Google Maps](https://www.google.com.tw/maps/) 方式將他們呈現出來！
+* 目前資料是儲存在 [Google 試算表](https://www.google.com.tw/intl/zh-TW/sheets/about/) 上面，所以不需要後端維護。
+* 有興趣的夥伴，可以按 [地圖](https://works.ioa.tw/LiveTaiwan/index.html) 右上角的「我要新增」來增加新景點喔，如果資訊有誤或者不正確，也歡迎在「備註欄位」告知一下！
 
-* [Window7](cmd/doc/WindowInstall.md)
-* MacOS
-
-## 說明
-* 這是一套 [OA Wu](https://www.ioa.tw/) 所製作的個人網頁前端框架！
-* 主功能是快速編寫網頁，主要語言為 [HTML](https://zh.wikipedia.org/zh-tw/HTML)、[SCSS](https://sass-lang.com/guide)、[JsvaScript](https://zh.wikipedia.org/wiki/JavaScript) 的框架。
-* 在 `cmd` 目錄內有 `Node.js` 檔案可以協助開發。
-
-
-
-## 如何使用
-### 開發
-終端機進入專案目錄下的 `cmd 目錄`，在 cmd 目錄下執行指令 `node watch`。
-
-> `node watch` 會開啟 `Livereload`、`Icon Fonts`、`Scss Files` 三種監聽。
-> 
-> * [Livereload](http://livereload.com/) - 當目錄 `js`、`css`、`img` 內的檔案與專案內的 `.html` 更新時，即會重新整理網頁。
-> * [Icon Fonts](https://icomoon.io/) - 將 `font` 目錄內的 `style.css` 轉換成 `.scss` 格式。
-> * [Scss Files](http://compass-style.org/) - 將 `.scss` 編譯成 `.css` 檔案。
-
-
-### 部署
-終端機進入專案目錄下的 `cmd 目錄`，在 cmd 目錄下執行指令 `node demo`，依據步驟完成輸入即可。
-
-> 若是部署至 `AWS S3`，則會依據 `cmd/_dirs.yaml` 的設定，上傳。  
-> 若是部署至 `AWS S3`，可以再 `cmd/libs/node/demo` 參考 `_config.js` 新增檔案 `config.js` 設定上傳的設定。
-
-
-### 打包
-終端機進入專案目錄下的 `cmd 目錄`，在 cmd 目錄下執行指令 `node zip`，會依據 `cmd/_dirs.yaml` 的設定，將指定的檔案做 zip 壓縮。
+## 技術說明
+* 本專案採用 [Ginkgo](https://github.com/comdan66/Ginkgo) 框架實作。
+* 專案內使用 [Youtube](https://www.youtube.com/) 作為主要直播來源。
+* 專案內使用 [GoogleMaps](https://www.google.com.tw/maps/) 作為地圖呈現方式。
+* 主要語言為 [HTML](https://zh.wikipedia.org/zh-tw/HTML)、[SCSS](https://sass-lang.com/guide)、[JsvaScript](https://zh.wikipedia.org/wiki/JavaScript) 的框架。

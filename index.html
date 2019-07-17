@@ -4,19 +4,52 @@
     <meta http-equiv="Content-Language" content="zh-tw">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+    <meta name="robots" content="index,follow" />
+    <meta name="keywords" content="全台灣,直播,地圖,天氣,即時,街景,監視器,錄影" />
+    <meta name="description" content="讓我們大家一起來搜集全台灣即時影像，組成一個全台灣的各個景點的直播地圖吧！" />
+    <meta property="og:site_name" content="直播地圖 - 全台灣最即時的影像紀錄" />
+    <meta property="og:title" content="直播地圖 - 全台灣最即時的影像紀錄" />
+    <meta property="og:description" content="讓我們大家一起來搜集全台灣即時影像，組成一個全台灣的各個景點的直播地圖吧！" />
 
-    <title></title>
+    <meta property="og:url" content="https://works.ioa.tw/LiveTaiwan/index.html" />
 
-    <link rel="stylesheet" type="text/css" href="css/icon.css">
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:type" content="article" />
+    <meta property="article:author" content="https://www.facebook.com/comdan66" />
+    <meta property="article:publisher" content="https://www.facebook.com/comdan66" />
+
+    <meta property="article:modified_time" content="2019-07-17T01:18:58+08:00" />
+    <meta property="article:published_time" content="2019-07-17T01:18:58+08:00" />
+
+    <meta property="og:image" content="https://works.ioa.tw/LiveTaiwan/img/og.png" />
+    <meta property="og:image:type" content="image/png" alt="直播地圖 - 全台灣最即時的影像紀錄" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    
+    <title>直播地圖 - 全台灣最即時的影像紀錄</title>
+
     <link rel="stylesheet" type="text/css" href="css/public.css">
-
-    <script language="javascript" type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
     <script language="javascript" type="text/javascript" src="js/public.js"></script>
   </head>
   <body>
+    <input type='checkbox' id='_add'>
+    <input type='checkbox' id='_readme'>
+    <h1><label for='_readme'>直播地圖</label></h1>
+    <a class='gb' href="https://github.com/comdan66/LiveTaiwan" target="_brank">GitHub 專案</a>
+    <main id='map'></main>
+    <label id='create' for='_add'>我要新增</label>
+    <label id='in'></label>
+    <label id='out'></label>
+    <form id='add' data-title='新增直播地點'><label data-title='標題'><input type="text" name="tit" required placeholder="擎天崗"></label><label data-title='緯度'><input type="text" name="lng" required placeholder="25.1611718"></label><label data-title='經度'><input type="text" name="lat" required placeholder="121.5391596"></label><label data-title='網址'><input type="text" name="url" required placeholder="https://www.youtube.com/watch?v=Iot2IHfilic"></label><label data-title='備註'><input type="text" name="memo" placeholder="想對作者講的悄悄話.. ⁽⁽٩(๑˃̶͈̀ ᗨ ˂̶͈́)۶⁾⁾"></label><label for='_add'>取消</label><button>確定</button></form><label for='_add'></label>
+    <div id='video' data-title='擎天崗'></div><label></label>
     
-    <h1>嗨，世界你好！</h1>
-    <span style="color: rgba(120, 120, 120, 1.00);">Ginkgo 版本 4.0.1</span>
+    <div id='readme' data-title='說明'>
+        <p>這是一個將全台灣各地的 <a href="" target="_brank">Youtube</a> 直播集合起來的網站，並且採用 <a href="" target="_brank">Google Maps</a> 方式將他們呈現出來！</p>
+        <p>目前資料是儲存在「<a href="https://www.google.com.tw/intl/zh-TW/sheets/about/" target="_blank">Google 試算表</a>」上面，所以不需要後端維護ＸＤ</p>
+        <p>有興趣的夥伴，可以按下右上角的「我要新增」來增加新景點喔，如果資訊有誤或者不正確，也歡迎在「備註欄位」告知一下！</p>
+        <span><a href="https://www.ioa.tw/" target="_brank">作者</a><i></i><a href="https://github.com/comdan66/LiveTaiwan" target="_brank">GitHub</a></span>
+        <label for='_readme'>關閉</label>
+    </div><label for='_readme'></label>
 
   </body>
 </html>

@@ -1,0 +1,14 @@
+@font-face { font-family: "icon"; src: url('../font/icomoon/fonts/icomoon.eot?1563373990') format('embedded-opentype'), url('../font/icomoon/fonts/icomoon.woff?1563373990') format('woff'), url('../font/icomoon/fonts/icomoon.ttf?1563373990') format('truetype'), url('../font/icomoon/fonts/icomoon.svg?1563373990') format('svg'); }
+*[class^="icon-"]:before, *[class*=" icon-"]:before { font-family: "icon"; speak: none; font-style: normal; font-weight: normal; font-variant: normal; }
+
+.icon-user-secret:before { content: "\e900"; }
+
+.icon-004:before { content: "\f0004"; }
+
+.icon-005:before { content: "\f0005"; }
+
+.icon-00d:before { content: "\f000d"; }
+
+.icon-016:before { content: "\f0016"; }
+
+.icon-github:before { content: "\eab0"; }
