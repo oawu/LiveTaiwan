@@ -1,7 +1,7 @@
 @charset "UTF-8";
 *, *:after, *:before { vertical-align: top; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; -moz-osx-font-smoothing: subpixel-antialiased; -webkit-font-smoothing: subpixel-antialiased; -moz-font-smoothing: subpixel-antialiased; -ms-font-smoothing: subpixel-antialiased; -o-font-smoothing: subpixel-antialiased; }
 
-@font-face { font-family: "icon"; src: url('../font/icomoon/fonts/icomoon.eot?1563373990') format('embedded-opentype'), url('../font/icomoon/fonts/icomoon.woff?1563373990') format('woff'), url('../font/icomoon/fonts/icomoon.ttf?1563373990') format('truetype'), url('../font/icomoon/fonts/icomoon.svg?1563373990') format('svg'); }
+@font-face { font-family: "icon"; src: url('../font/icomoon/fonts/icomoon.eot?1563416454') format('embedded-opentype'), url('../font/icomoon/fonts/icomoon.woff?1563416454') format('woff'), url('../font/icomoon/fonts/icomoon.ttf?1563416454') format('truetype'), url('../font/icomoon/fonts/icomoon.svg?1563416454') format('svg'); }
 .-pf, .-pf-fu, #map, .-cxh, #_add, #_readme, .-uox, #readme, #add, #video, #loading, .-uox-c, #readme + label, #add + label, #video + label, #notify { position: fixed; }
 
 .-pa, .-pa-fu, .-slt:before, .marker span, .marker b, #readme label[for], #readme button, #add label[for], #add button, #video label[for], #video button, #readme label:not([for]):before, #add label:not([for]):before, #video label:not([for]):before, #video a, .notify, .notify-close, #loading:before, #loading:after { position: absolute; }
@@ -180,7 +180,7 @@ h1 label { padding: 0 20px; }
 
 #video { width: 650px; height: 480px; }
 @media screen and (max-width: 669px) and (min-width: 0) { #video { width: calc(100% - 16px); } }
-#video iframe { width: 100%; height: 100%; }
+#video iframe { width: 100%; height: 100%; max-height: calc(100% - 44px); }
 #video a { padding: 0 10px; height: 44px; line-height: 44px; z-index: 2; }
 #video.show { top: calc(50% - 480px/2); left: calc(50% - 650px/2); z-index: 999; -moz-transition: -moz-transform 0.3s cubic-bezier(0.68, -0.275, 0.825, 0.115); -o-transition: -o-transform 0.3s cubic-bezier(0.68, -0.275, 0.825, 0.115); -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.68, -0.275, 0.825, 0.115); transition: transform 0.3s cubic-bezier(0.68, -0.275, 0.825, 0.115); }
 @media screen and (max-width: 669px) and (min-width: 0) { #video.show { left: 8px; } }
